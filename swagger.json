@@ -62,29 +62,17 @@
         "tags": [
           "account"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "name": "body",
-                "in": "body",
-                "required": true,
-                "description": "The name of the account",
-                "type": "object",
-                "schema": {
-                  "required": [
-                    "name"
-                  ],
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": false,
+            "schema": {
+              "$ref": "#/parameters/AccountName"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "An account object",
@@ -182,6 +170,41 @@
           }
         }
       },
+      "post": {
+        "summary": "Create a character for a specific account",
+        "operationId": "createCharacter",
+        "tags": [
+          "character"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AccountID"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": false,
+            "schema": {
+              "$ref": "#/parameters/Character"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "schema": {
+              "$ref": "#/definitions/Character"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
       "delete": {
         "summary": "Delete all the characters associated to a specific account",
         "operationId": "deleteAllCharactersByAccountID",
@@ -245,37 +268,6 @@
         "parameters": [
           {
             "$ref": "#/parameters/CharacterID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Expected response to a valid request",
-            "schema": {
-              "$ref": "#/definitions/Character"
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/{accountID}": {
-      "post": {
-        "summary": "Create a character for a specific account",
-        "operationId": "createCharacter",
-        "tags": [
-          "character"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/AccountID"
-          },
-          {
-            "$ref": "#/parameters/Character"
           }
         ],
         "responses": {
@@ -372,45 +364,42 @@
       "type": "string"
     },
     "AccountName": {
-      "name": "name",
-      "in": "body",
-      "required": true,
-      "description": "The name of the account",
       "type": "object",
-      "schema": {
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          }
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
         }
       }
     },
     "CharacterID": {
-      "name": "CharacterID",
+      "name": "characterID",
       "in": "path",
       "required": true,
       "description": "The id of the character to retrieve",
       "type": "string"
     },
     "Character": {
-      "name": "character",
-      "in": "body",
-      "required": true,
       "description": "The character object",
       "type": "object",
-      "schema": {
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "xp": {
-            "type": "number"
+      "required": [
+        "character"
+      ],
+      "properties": {
+        "character": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "xp": {
+              "type": "number"
+            }
           }
         }
       }

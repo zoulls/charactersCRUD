@@ -26,7 +26,7 @@ router.get('/:characterID',
     (req, res, next) => commonController.handler(req, res)
 );
 
-router.post('/:accountID',
+router.post('/account/:accountID',
     (req, res, next) => commonController.initContext(req, res, next),
     (req, res, next) => {
         req.context.inputValidation = [
