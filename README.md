@@ -1,14 +1,14 @@
 API Characters CRUD
 ===================
 
-Pre-requisite
+Prerequisite
 -------------
 
 - Node 8
 - Postgresql 9
 
 Create a user and database **characters_crud**
-or change the values on the configuration file *config/dev.json*
+or change the values in the configuration file *config/dev.json*
 
     "db": {
         "user": "characters_crud",
@@ -27,7 +27,7 @@ Launch
 
     npm start
 
-To launch a multi instance you can pass the port in parameters (default port 3000)
+To launch a multiple instance, you can pass the port in parameters (default port 3000)
 
     npm start 3001
     
