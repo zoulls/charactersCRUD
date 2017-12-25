@@ -1,7 +1,6 @@
 {
   "server": {
-    "port": 3001,
-    "portRetry": 5
+    "port": 3000
   },
   "account": {
     "tableName": "account"
@@ -10,9 +9,9 @@
     "tableName": "character"
   },
   "db": {
-    "user": "characterscrud",
+    "user": "characters_crud",
     "host": "localhost",
-    "database": "characterscrud",
+    "database": "characters_crud",
     "password": "password",
     "port": 5432
   }

@@ -1,28 +1,26 @@
 'use strict';
 
 require('app-module-path').addPath(__dirname.slice(0, -7));
-const assert = require('assert');
 const db = require('src/db');
 const config = require('config/dev.json');
 
 (async function () {
     try {
-        const tableAccountCreation = await db.query('CREATE TABLE IF NOT EXISTS ' + config.account.tableName +
-            '(\n' +
-            '  account_id varchar(45) NOT NULL,  \n' +
-            '  password varchar(450) NOT NULL,  \n' +
-            '  enabled integer NOT NULL DEFAULT \'1\',  \n' +
-            '  PRIMARY KEY (user_id)  \n' +
+        await db.query('CREATE TABLE IF NOT EXISTS ' + config.account.tableName +
+            '( ' +
+            'account_id serial PRIMARY KEY, ' +
+            'name varchar(20) NOT NULL ' +
             ')');
-        const tableCharacterCreation = await db.query('CREATE TABLE IF NOT EXISTS ' + config.character.tableName +
-            '(\n' +
-            '  character_id serial PRIMARY KEY,  \n' +
-            '  password varchar(450) NOT NULL,  \n' +
-            '  enabled integer NOT NULL DEFAULT \'1\',  \n' +
+        await db.query('CREATE TABLE IF NOT EXISTS ' + config.character.tableName +
+            '( ' +
+            'character_id serial PRIMARY KEY, ' +
+            'account_id int REFERENCES account, ' +
+            'name varchar(20) NOT NULL, ' +
+            'xp int DEFAULT 0 ' +
             ')');
-        console.log(tableAccountCreation);
-        console.log(tableCharacterCreation);
+        process.exit(0);
     } catch (err) {
-        throw err;
+        console.error(err);
+        process.exit(1);
     }
 })();

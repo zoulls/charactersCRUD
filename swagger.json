@@ -1,137 +1,419 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "0.0.1",
-        "title": "Swagger Characters CRUD",
-        "license": {
-            "name": "MIT"
-        }
-    },
-    "host": "localhost:3000",
-    "basePath": "/v1",
-    "schemes": [
-        "http"
-    ],
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
-    ],
-    "paths": {
-        "/account": {
-            "get": {
-                "summary": "List all accounts",
-                "operationId": "listAccounts",
-                "tags": [
-                    "account"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "An array of accounts",
-                        "schema": {
-                            "$ref": "#/definitions/accounts"
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "summary": "Create a pet",
-                "operationId": "createPets",
-                "tags": [
-                    "pets"
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Null response"
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/pets/{petId}": {
-            "get": {
-                "summary": "Info for a specific pet",
-                "operationId": "showPetById",
-                "tags": [
-                    "pets"
-                ],
-                "parameters": [
-                    {
-                        "name": "petId",
-                        "in": "path",
-                        "required": true,
-                        "description": "The id of the pet to retrieve",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Expected response to a valid request",
-                        "schema": {
-                            "$ref": "#/definitions/Pets"
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "Account": {
-            "required": [
-                "accountid",
-                "name"
-            ],
-            "properties": {
-                "accountID": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "tag": {
-                    "type": "string"
-                }
-            }
-        },
-        "Accounts": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/Account"
-            }
-        },
-        "Error": {
-            "required": [
-                "code",
-                "message"
-            ],
-            "properties": {
-                "code": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        }
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Swagger Characters CRUD",
+    "license": {
+      "name": "MIT"
     }
+  },
+  "host": "localhost:3000",
+  "basePath": "/v1",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/account": {
+      "get": {
+        "summary": "List all accounts",
+        "operationId": "listAccounts",
+        "tags": [
+          "account"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of accounts",
+            "schema": {
+              "Result": {
+                "required": [
+                  "result",
+                  "data"
+                ],
+                "properties": {
+                  "result": {
+                    "type": "boolean"
+                  },
+                  "data": {
+                    "items": {
+                      "$ref": "#/definitions/Account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a account",
+        "operationId": "createAccount",
+        "tags": [
+          "account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "name": "body",
+                "in": "body",
+                "required": true,
+                "description": "The name of the account",
+                "type": "object",
+                "schema": {
+                  "required": [
+                    "name"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "An account object",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/account/{accountID}": {
+      "get": {
+        "summary": "Info for a specific account",
+        "operationId": "showAccountById",
+        "tags": [
+          "account"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AccountID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a account and all the characters associated",
+        "operationId": "deleteAccount",
+        "tags": [
+          "account"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AccountID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/character/account/{accountID}": {
+      "get": {
+        "summary": "List all characters for a specific account",
+        "operationId": "listAllCharactersByAccountID",
+        "tags": [
+          "character"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AccountID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "schema": {
+              "$ref": "#/definitions/Characters"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete all the characters associated to a specific account",
+        "operationId": "deleteAllCharactersByAccountID",
+        "tags": [
+          "character"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AccountID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/character/{characterID}": {
+      "get": {
+        "summary": "Info for a specific character",
+        "operationId": "showCharactersByID",
+        "tags": [
+          "character"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/CharacterID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "schema": {
+              "$ref": "#/definitions/Character"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete specific character",
+        "operationId": "deleteCharacterByID",
+        "tags": [
+          "character"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/CharacterID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "schema": {
+              "$ref": "#/definitions/Character"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/{accountID}": {
+      "post": {
+        "summary": "Create a character for a specific account",
+        "operationId": "createCharacter",
+        "tags": [
+          "character"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AccountID"
+          },
+          {
+            "$ref": "#/parameters/Character"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "schema": {
+              "$ref": "#/definitions/Character"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Account": {
+      "required": [
+        "accountID",
+        "name"
+      ],
+      "properties": {
+        "accountID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Accounts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Account"
+      }
+    },
+    "Character": {
+      "required": [
+        "characterID",
+        "accountID",
+        "name"
+      ],
+      "properties": {
+        "characterID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "accountID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "xp": {
+          "type": "number",
+          "default": 0
+        }
+      }
+    },
+    "Characters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Character"
+      }
+    },
+    "Error": {
+      "required": [
+        "code",
+        "msg"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msg": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "AccountID": {
+      "name": "accountID",
+      "in": "path",
+      "required": true,
+      "description": "The id of the account to retrieve",
+      "type": "string"
+    },
+    "AccountName": {
+      "name": "name",
+      "in": "body",
+      "required": true,
+      "description": "The name of the account",
+      "type": "object",
+      "schema": {
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CharacterID": {
+      "name": "CharacterID",
+      "in": "path",
+      "required": true,
+      "description": "The id of the character to retrieve",
+      "type": "string"
+    },
+    "Character": {
+      "name": "character",
+      "in": "body",
+      "required": true,
+      "description": "The character object",
+      "type": "object",
+      "schema": {
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "xp": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
 }

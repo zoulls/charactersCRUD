@@ -14,7 +14,7 @@ class AccountModel {
     
     async getAccountByAccountID(accountID) {
         try {
-            const {rows} = await this.db.query('SELECT * FROM ' + this.config.tableName + ' WHERE accountID = $1', [accountID]);
+            const {rows} = await this.db.query('SELECT * FROM ' + this.config.tableName + ' WHERE account_id = $1', [accountID]);
             return rows[0];
         } catch (err) {
             throw err;
@@ -32,7 +32,7 @@ class AccountModel {
     
     async createAccount(name) {
         try {
-            const {rows} = await this.db.query('INSERT INTO ' + this.config.tableName + '(accountID, name) ' +
+            const {rows} = await this.db.query('INSERT INTO ' + this.config.tableName + '(account_id, name) ' +
                 'values(default, $1) RETURNING *', [name]);
             return rows[0];
         } catch (err) {
@@ -42,7 +42,7 @@ class AccountModel {
     
     async deleteAccount(accountID) {
         try {
-            const {rows} = await this.db.query('DELETE FROM ' + this.config.tableName + ' WHERE accountID = $1 RETURNING *', [accountID]);
+            const {rows} = await this.db.query('DELETE FROM ' + this.config.tableName + ' WHERE account_id = $1 RETURNING *', [accountID]);
             return rows[0];
         } catch (err) {
             throw err;
