@@ -1,0 +1,19 @@
+{
+  "server": {
+    "port": 3001,
+    "portRetry": 5
+  },
+  "account": {
+    "tableName": "account"
+  },
+  "character": {
+    "tableName": "character"
+  },
+  "db": {
+    "user": "characterscrud",
+    "host": "localhost",
+    "database": "characterscrud",
+    "password": "password",
+    "port": 5432
+  }
+}

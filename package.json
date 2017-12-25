@@ -1,14 +1,22 @@
 {
-  "name": "characterscrud",
+  "name": "characters_crud",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": "~8.9.3"
+  },
   "scripts": {
-    "start": "node ./bin/server"
+    "start": "node ./bin/server",
+    "install": "node ./script/dbInit"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "morgan": "~1.9.0",
+    "app-module-path": "~2.2.0",
+    "jsonschema": "~1.2.2",
+    "pg": "~7.4.0",
+    "swagger-ui-express": "~2.0.13"
   }
 }

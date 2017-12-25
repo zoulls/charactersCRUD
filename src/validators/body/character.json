@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "required": true,
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "xp": {
+      "type": "number",
+      "required": false
+    }
+  }
+}
